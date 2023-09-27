@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:todo_app/zombi.dart';
+
 import 'package:todo_app/sql_helper.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,8 +18,31 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = true;
 
+  Future<void> _addItem() async {
+    await AddTodoItem(_titleController.text, _desController.text);
+    _refreshJournals();
+
+    print("we have ${_journals.length} task");
+  }
+
+  Future<void> _deleteItem(String id) async {
+    await deleteTodoItem(id);
+    _refreshJournals();
+
+    print("Item $id deleted successfully");
+
+    print("we have ${_journals.length} task");
+  }
+
+  Future<void> _updateItem(String id) async {
+    await EditTodoItem(id, _titleController.text, _desController.text);
+    _refreshJournals();
+
+    print("Item $id updated successfully");
+  }
+
   void _refreshJournals() async {
-    final data = await SQLHelper.getItems();
+    final data = await getTodoItems();
     setState(() {
       _journals = data;
       _isLoading = false;
@@ -31,14 +59,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _desController = TextEditingController();
 
-  Future<void> _addItem() async {
-    await SQLHelper.createItem(_titleController.text, _desController.text);
-    _refreshJournals();
-
-    print("we have ${_journals.length} task");
-  }
-
-  void _showForm(int? id) {
+  void _showForm(String? id) {
     if (id != null) {
       final existingJournal = _journals.firstWhere(
         (element) => element['id'] == id,
@@ -102,8 +123,8 @@ class _HomePageState extends State<HomePage> {
                 if (id == null) {
                   await _addItem();
                 }
-                if (id == null) {
-                  // await _updateItem();
+                if (id != null) {
+                  await _updateItem(id);
                 }
 
                 _titleController.text = '';
@@ -128,7 +149,43 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Tasks"),
       ),
+      body: ListView.builder(
+        itemBuilder: (context, index) => Card(
+          color: Colors.blue[800],
+          margin: EdgeInsets.all(15),
+          child: ListTile(
+            title: Text(
+              _journals[index]['title'],
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              _journals[index]['description'],
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            trailing: SizedBox(
+              width: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => _showForm(_journals[index]['id']),
+                    icon: Icon(Icons.edit),
+                  ),
+                  IconButton(
+                    onPressed: () => _deleteItem(_journals[index]['id']),
+                    icon: Icon(Icons.delete),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        itemCount: _journals.length,
+      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue[800],
         child: Icon(
           Icons.add,
         ),

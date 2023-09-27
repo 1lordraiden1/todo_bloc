@@ -1,8 +1,23 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:todo_app/home.dart';
 import 'package:todo_app/screens/home/home_layout.dart';
+import 'package:todo_app/sql_helper.dart';
+import 'package:todo_app/zombi.dart';
 
-void main() {
+void main() async {
+  
+
+  sqfliteFfiInit();
+  if (kIsWeb) {
+    // Change default factory on the web
+    databaseFactory = databaseFactoryFfiWeb;
+  } else {
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(const MyApp());
 }
 
@@ -31,8 +46,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: const HomePage(),
     );
