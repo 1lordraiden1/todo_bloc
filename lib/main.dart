@@ -1,16 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:todo_app/home.dart';
-import 'package:todo_app/screens/home/home_layout.dart';
-import 'package:todo_app/sql_helper.dart';
-import 'package:todo_app/zombi.dart';
 
 void main() async {
-  
-
   sqfliteFfiInit();
   if (kIsWeb) {
     // Change default factory on the web
@@ -29,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Todo App',
       theme: ThemeData(
         // This is the theme of your application.
         //

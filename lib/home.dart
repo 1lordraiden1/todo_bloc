@@ -1,10 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:todo_app/zombi.dart';
 
-import 'package:todo_app/sql_helper.dart';
+import 'package:todo_app/zombi.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -88,14 +84,15 @@ class _HomePageState extends State<HomePage> {
                 if (value.toString().isEmpty) {
                   return 'Enter Title';
                 }
+                return null;
               },
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 label: Text('Task title'),
                 prefix: Icon(Icons.abc_outlined),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -104,9 +101,10 @@ class _HomePageState extends State<HomePage> {
                 if (value.toString().isEmpty) {
                   return 'Enter Description';
                 }
+                return null;
               },
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 label: Text(
                   'Task Descirption',
                 ),
@@ -115,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             ElevatedButton(
@@ -132,9 +130,10 @@ class _HomePageState extends State<HomePage> {
 
                 Navigator.of(context).pop();
               },
-              child: id == null ? Text("Create New") : Text("Update"),
+              child:
+                  id == null ? const Text("Create New") : const Text("Update"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
           ],
@@ -152,15 +151,15 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
         itemBuilder: (context, index) => Card(
           color: Colors.blue[800],
-          margin: EdgeInsets.all(15),
+          margin: const EdgeInsets.all(15),
           child: ListTile(
             title: Text(
               _journals[index]['title'],
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             subtitle: Text(
               _journals[index]['description'],
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -171,11 +170,11 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   IconButton(
                     onPressed: () => _showForm(_journals[index]['id']),
-                    icon: Icon(Icons.edit),
+                    icon: const Icon(Icons.edit),
                   ),
                   IconButton(
                     onPressed: () => _deleteItem(_journals[index]['id']),
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                   ),
                 ],
               ),
@@ -186,7 +185,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue[800],
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
         onPressed: () => _showForm(null),

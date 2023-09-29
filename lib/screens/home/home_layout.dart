@@ -22,8 +22,8 @@ class _HomeLayoutState extends State<HomeLayout> {
 
 List<Widget> pages = [
     TaskScreen(),
-    DoneScreen(),
-    ArchiveScreen(),
+    const DoneScreen(),
+    const ArchiveScreen(),
   ];
 
 
@@ -44,7 +44,7 @@ List<Widget> pages = [
     return Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-              title: Text("Todo App"),
+              title: const Text("Todo App"),
             ),
             body:
              FloatingActionButton(
@@ -68,7 +68,7 @@ List<Widget> pages = [
                                 }
                               },
                               keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 label: Text('Task title'),
                                 prefix: Icon(Icons.abc_outlined),
                               ),
@@ -91,7 +91,7 @@ List<Widget> pages = [
                                   return 'Enter Time';
                                 }
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 label: Text('Task Time'),
                                 prefix: Icon(
                                   Icons.watch_later_outlined,
@@ -118,7 +118,7 @@ List<Widget> pages = [
                                 });
                               },
                               keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 label: Text('Task Date'),
                                 prefix: Icon(Icons.calendar_month_outlined),
                               ),
@@ -129,7 +129,7 @@ List<Widget> pages = [
                   isBottomSheet = true;
                 }
               },
-              child: Icon(
+              child: const Icon(
                 Icons.add,
               ),
             ),
@@ -141,12 +141,12 @@ List<Widget> pages = [
 
               },
               items: [
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                     icon: Icon(Icons.task_outlined), label: "Tasks"),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                     icon: Icon(Icons.check_circle_outline_outlined),
                     label: "Done"),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                     icon: Icon(Icons.archive_outlined), label: "Archive"),
               ],
             ),
